@@ -1,6 +1,8 @@
 import express from 'express';
 import database from './database.config.js';
-
+import userRouter from '../resources/user/user.route.js';
+import weddingRouter from '../resources/wedding/wedding.route.js';
+import loggerMiddleware from '../middleware/config.logger.js';
 const app = express();
 
 database.then(() => {
@@ -8,6 +10,10 @@ database.then(() => {
 }).catch((err) => {
     console.log('Error connecting to database', err);
 });
+
+app.use('/api/users', userRouter);
+app.use('/api/weddings', weddingRouter);
+app.use('/', loggerMiddleware);
 
 export default app;
 
