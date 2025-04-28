@@ -1,12 +1,12 @@
 import express from 'express';
 import * as weddingController from './wedding.controller.js';
 
-const router = express.Router();
+const weddingRouter = express.Router();
 
-router.post('/', weddingController.createWedding);
-router.get('/', weddingController.getWeddings);
-router.get('/:id', weddingController.getWeddingById);
-router.put('/:id', weddingController.updateWedding);
-router.delete('/:id', weddingController.deleteWedding);
+weddingRouter.post('/', weddingController.createWedding);
+weddingRouter.get('/', weddingController.getWeddings);
+weddingRouter.get('/:id', weddingController.getWeddingById);
+weddingRouter.put('/:id', weddingController.updateWedding);
+weddingRouter.delete('/:id', weddingController.deleteWedding);
 
-export default router;
+export default weddingRouter;
