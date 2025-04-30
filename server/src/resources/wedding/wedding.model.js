@@ -1,14 +1,24 @@
+import { name } from 'ejs';
 import mongoose from 'mongoose';
 
-const { Schema, model } = mongoose;
+const weddingSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true
+  },
+  date: {
+    type: Date,
+    required: true
+  },
+  place: {
+    type: String,
+    required: true
+  },
+  vendors: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: 'Vendor',
+    required: true
+  }    
+})
 
-const WeddingSchema = new Schema({
-  couple: [{ type: Schema.Types.ObjectId, ref: 'User', required: true }],
-  date: { type: Date, required: true },
-  venue: { type: String },
-  address: { type: String }
-}, { timestamps: true });
-
-export const Wedding = model('Wedding', WeddingSchema);
-
-
+export default mongoose.model('Wedding', weddingSchema);

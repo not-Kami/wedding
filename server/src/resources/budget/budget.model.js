@@ -1,27 +1,24 @@
 import mongoose from 'mongoose';
 
-const guestSchema = new mongoose.Schema({
+const  budgetSchema = new mongoose.Schema({
     wedding: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Wedding',
         required: true
     },
-    name: {
-        type: String,
+    spending: { 
+        type: Number,
         required: true
     },
-    RSVP: {
-        type: Boolean,
-        default: false
-    },
-    plusOne: {
-        type: Boolean,
-        default: false
+    totalBudget: {
+        type: Number,
+        required: true
     },
     status: {
         type: String,
-        enum: ['pending', 'confirmed', 'cancelled'],
+        enum: ['pending', 'approved', 'rejected'],
         default: 'pending'
     }
 }, { timestamps: true });
 
+export const Budget = mongoose.model('Budget', budgetSchema);
