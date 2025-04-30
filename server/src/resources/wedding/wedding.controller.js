@@ -1,5 +1,4 @@
 
-// File: src/wedding/wedding.controller.js
 import { Wedding } from './wedding.model.js';
 
 export const createWedding = async (req, res, next) => {
