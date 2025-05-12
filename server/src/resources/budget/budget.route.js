@@ -7,7 +7,9 @@ const budgetRouter = Router();
 budgetRouter
   .route('/')
   .get(getBudget)
-  .post(createBudget);  
+  .post(createBudget)
+  .put('/:id', updateBudget)
+  .delete('/:id', deleteBudget);  
 
 
 

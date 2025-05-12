@@ -5,8 +5,12 @@ const vendorRouter = Router();
 
 vendorRouter
   .route('/')
-    .get(getVendor)
-    .post(createVendor);  
+    .get(getVendors)
+    .post(createVendor)
+    .delete('/:id', deleteVendor)
+    .put('/:id', updateVendor)
+    .get('/:id', getVendorById);
+  ;
 
    
 

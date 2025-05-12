@@ -1,3 +1,4 @@
+import e from 'express';
 import Vendor from './vendor.model.js';
 
 export const createVendor = async (req, res) => {
@@ -11,7 +12,17 @@ export const createVendor = async (req, res) => {
     }
 };
 
-export const getVendor = async (req, res) => {
+
+export const getVendors = async (req, res) => {
+    try{
+        const vendors = await Vendor.find();
+        res.status(200).json(vendors);
+    } catch (error) {
+        res.status(500).json({message: error.message});
+    }
+}
+
+export const getVendorById = async (req, res) => {
     try{
         const {id} = req.params;
         const vendor = await Vendor.findById(id);
@@ -19,6 +30,24 @@ export const getVendor = async (req, res) => {
     } catch (error) {
         res.status(500).json({message: error.message});
     }
+}
+
+export const updateVendor = async (req, res) => {
+    try{
+        const {id} = req.params;
+        const {name, type, contact} = req.body;
+        const vendor = await Vendor.findByIdAndUpdate(id, {name, type, contact}, {new: true});
+        res.status(200).json(vendor);
+    } catch (error) {
+        res.status(500).json({message: error.message});
+    }
 };
-
-
+export const deleteVendor = async (req, res) => {
+    try{
+        const {id} = req.params;
+        await Vendor.findByIdAndDelete(id);
+        res.status(204).send();
+    } catch (error) {
+        res.status(500).json({message: error.message});
+    }
+};

@@ -7,6 +7,11 @@ const weddingRouter = Router();
 weddingRouter
   .route('/')
   .post(createWedding)
-  .get(getWedding);  
+  .get(getWeddings)
+  .get('/:id', getWeddingById)
+  .put('/:id', updateWedding)
+  .delete('/:id', deleteWedding);
+  ;  
+
 
 export default weddingRouter;
