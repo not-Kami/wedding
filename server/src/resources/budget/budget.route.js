@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { createBudget, getBudget } from './budget.controller.js';
 
 
 const budgetRouter = Router();
@@ -8,11 +9,6 @@ budgetRouter
   .get(getBudget)
   .post(createBudget);  
 
-budgetRouter
-  .route('/:id')
-    .get(getBudgetById)
-    .post(updateBudgetById)
-   
 
 
 export default budgetRouter;

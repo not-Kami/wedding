@@ -1,4 +1,4 @@
-import Guest from './guest.model';
+import Guest from './guest.model.js';
 
 export const createGuest = async (req, res) => {
     try{

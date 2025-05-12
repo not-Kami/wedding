@@ -1,17 +1,13 @@
 import { Router } from 'express';
-
+import { createVendor, getVendor } from './vendor.controller.js';
 
 const vendorRouter = Router();
 
 vendorRouter
   .route('/')
-  .get(getVendor)
-  .post(createVendor);  
+    .get(getVendor)
+    .post(createVendor);  
 
-  vendorRouter
-  .route('/:id')
-    .get(getVendorById)
-    .post(updateVendorById)
    
 
 

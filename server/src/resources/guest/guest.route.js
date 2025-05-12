@@ -1,5 +1,5 @@
 import { Router } from 'express';
-
+import { createGuest, getGuest } from './guest.controller.js';
 
 const guestRouter = Router();
 
@@ -8,11 +8,5 @@ guestRouter
   .get(getGuest)
   .post(createGuest);  
 
-  guestRouter
-  .route('/:id')
-    .get(getGuestById)
-    .post(updateGuestById)
    
-
-
 export default guestRouter;

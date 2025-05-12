@@ -1,18 +1,12 @@
 import { Router } from 'express';
+import { createWedding, getWedding } from './wedding.controller.js';
 
 
 const weddingRouter = Router();
 
 weddingRouter
   .route('/')
-  .get(getWedding)
-  .post(createWedding);  
-
-weddingRouter
-  .route('/:id')
-    .get(getWeddingById)
-    .post(updateWeddingById)
-   
-
+  .post(createWedding)
+  .get(getWedding);  
 
 export default weddingRouter;

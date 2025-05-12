@@ -1,4 +1,4 @@
-import Wedding from './wedding.model';
+import Wedding from './wedding.model.js';
 
 export const createWedding = async (req, res) => {
     try{
