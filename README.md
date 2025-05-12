@@ -47,7 +47,7 @@ server/
    Créer un fichier `.env` à la racine du projet:
    ```env
    PORT=3000
-   MONGODB_URI=mongodb://localhost:27017/wedding-api
+   MONGODB_URI=mongodb+srv://admin:gkfAqupt0mbo9u9h@wedding-planner-db-test.xhdmhed.mongodb.net/?retryWrites=true&w=majority&appName=wedding-planner-db-test
    ```
 
 4. **Démarrer le serveur:**
