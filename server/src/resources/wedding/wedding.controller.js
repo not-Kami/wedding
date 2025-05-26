@@ -11,13 +11,15 @@ export const createWedding = async (req, res) => {
     }
 };
 
+// Obtenir tous les mariages
 export const getWeddings = async (req, res) => {
-    try{
-        const weddings = await Wedding.find();
-        res.status(200).json(weddings);
-    } catch (error) {
-        res.status(500).json({message: error.message});
-    }
+  try {
+    const weddings = await Wedding.find();
+    res.status(200).json(weddings);
+  } catch (error) {
+    console.error('Error in getWeddings:', error);
+    res.status(500).json({ message: 'Erreur lors de la récupération des mariages' });
+  }
 }
 
 export const getWeddingById = async (req, res) => {

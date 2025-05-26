@@ -13,11 +13,12 @@ const weddingSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  vendors: {
-    type: [mongoose.Schema.Types.ObjectId],
-    ref: 'Vendor',
-    required: true
-  }    
-})
+  vendors: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Vendor'
+  }]
+}, { timestamps: true });
 
-export default mongoose.model('Wedding', weddingSchema);
+const Wedding = mongoose.model('Wedding', weddingSchema);
+
+export default Wedding;

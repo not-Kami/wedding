@@ -1,16 +1,18 @@
 import { Router } from 'express';
-import { createBudget, getBudget } from './budget.controller.js';
-
+import { createBudget, getBudget, updateBudget, deleteBudget } from './budget.controller.js';
 
 const budgetRouter = Router();
 
+// Routes pour '/'
 budgetRouter
   .route('/')
   .get(getBudget)
-  .post(createBudget)
-  .put('/:id', updateBudget)
-  .delete('/:id', deleteBudget);  
+  .post(createBudget);
 
-
+// Routes pour '/:id'
+budgetRouter
+  .route('/:id')
+  .put(updateBudget)
+  .delete(deleteBudget);
 
 export default budgetRouter;

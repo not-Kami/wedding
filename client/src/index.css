@@ -1,0 +1,166 @@
+:root {
+  --primary-color: #f472b6;
+  --primary-dark: #db2777;
+  --secondary-color: #6366f1;
+  --text-color: #1f2937;
+  --light-color: #f9fafb;
+  --gray-color: #e5e7eb;
+  --dark-gray: #9ca3af;
+  --success-color: #10b981;
+  --error-color: #ef4444;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--text-color);
+  background-color: var(--light-color);
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+header {
+  padding: 2rem 0;
+  text-align: center;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+}
+
+header h1 {
+  color: var(--primary-dark);
+  font-size: 2.5rem;
+}
+
+main {
+  padding: 2rem 0;
+}
+
+section {
+  margin-bottom: 3rem;
+}
+
+h2 {
+  margin-bottom: 1.5rem;
+  color: var(--primary-dark);
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+h2::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 100px;
+  background-color: var(--primary-color);
+}
+
+.weddings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.wedding-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.wedding-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.wedding-card h3 {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 1rem;
+  font-size: 1.25rem;
+}
+
+.wedding-details {
+  padding: 1.5rem;
+}
+
+.wedding-details p {
+  margin-bottom: 0.75rem;
+}
+
+.card-actions {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--gray-color);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-details {
+  background-color: var(--secondary-color);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.btn-details:hover {
+  background-color: #4f46e5;
+}
+
+.loading {
+  text-align: center;
+  padding: 3rem;
+  font-size: 1.25rem;
+  color: var(--dark-gray);
+}
+
+.error {
+  text-align: center;
+  padding: 2rem;
+  background-color: #fee2e2;
+  color: var(--error-color);
+  border-radius: 8px;
+  margin: 2rem 0;
+}
+
+.no-data {
+  text-align: center;
+  padding: 2rem;
+  background-color: var(--gray-color);
+  border-radius: 8px;
+  color: var(--dark-gray);
+}
+
+footer {
+  text-align: center;
+  padding: 2rem 0;
+  margin-top: 2rem;
+  color: var(--dark-gray);
+  border-top: 1px solid var(--gray-color);
+}
+
+@media (max-width: 768px) {
+  .weddings-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  header h1 {
+    font-size: 2rem;
+  }
+}
