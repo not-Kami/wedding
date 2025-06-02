@@ -23,6 +23,7 @@ connectToDatabase()
 app.get('/api/test', (req, res) => res.json({ message: 'API test route works!' }));
 
 // LOGIN / REGISTER
+
 app.use('/api/auth', authRouter);
 
 // Autres routes
