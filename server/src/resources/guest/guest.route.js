@@ -1,12 +1,17 @@
 import { Router } from 'express';
-import { createGuest, getGuest } from './guest.controller.js';
+import { createGuest, getGuests, getGuestById, updateGuest, deleteGuest } from './guest.controller.js';
 
 const guestRouter = Router();
 
 guestRouter
   .route('/')
-  .get(getGuest)
-  .post(createGuest);  
+  .get(getGuests)
+  .post(createGuest);
 
-   
+guestRouter
+  .route('/:id')
+  .get(getGuestById)
+  .put(updateGuest)
+  .delete(deleteGuest);
+
 export default guestRouter;

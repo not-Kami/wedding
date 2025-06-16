@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const  budgetSchema = new mongoose.Schema({
+const budgetSchema = new mongoose.Schema({
     wedding: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Wedding',
@@ -8,11 +8,20 @@ const  budgetSchema = new mongoose.Schema({
     },
     spending: { 
         type: Number,
-        required: true
+        required: true,
+        min: 0
     },
     totalBudget: {
         type: Number,
+        required: true,
+        min: 0
+    },
+    category: {
+        type: String,
         required: true
+    },
+    description: {
+        type: String
     },
     status: {
         type: String,

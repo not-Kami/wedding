@@ -1,73 +1,141 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
+import { useForm } from 'react-hook-form';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+
+interface LoginFormData {
+  email: string;
+  password: string;
+}
 
 const LoginPage: React.FC = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<LoginFormData>();
 
-   const handleSubmit = async (event: React.FormEvent) => {
-        event.preventDefault();
-        setError('');
-        
-        try {
-            const response = await fetch('http://localhost:3000/api/auth/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, password }),
-            });
+  const onSubmit = async (data: LoginFormData) => {
+    try {
+      setLoading(true);
+      const response = await axios.post('http://localhost:3000/api/auth/login', data);
 
-            const data = await response.json();
+      if (response.data.token) {
+        localStorage.setItem('token', response.data.token);
+        toast.success('Connexion réussie !');
+        navigate('/dashboard');
+      }
+    } catch (error: any) {
+      console.error('Login error:', error);
+      if (error.response?.status === 401) {
+        toast.error('Email ou mot de passe incorrect');
+      } else if (error.response?.data?.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error('Erreur lors de la connexion. Veuillez réessayer.');
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
-            if (response.ok) {
-                // Stocker le token dans localStorage
-                localStorage.setItem('token', data.token);
-                // Rediriger vers le dashboard
-                navigate('/dashboard');
-            } else {
-                setError(data.message || 'Login failed');
-            }
-        } catch (err) {
-            setError('An error occurred during login');
-            console.error('Login error:', err);
-        }
-    };
-
-    
-
-    return (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', width: '300px' }}>
-                <h2>Login</h2>
-                {error && <div style={{ color: 'red', marginBottom: '10px' }}>{error}</div>}
-                <label htmlFor="email">Email:</label>
-                <input
-                    type="email"
-                    id="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                />
-                <label htmlFor="password">Password:</label>
-                <input
-                    type="password"
-                    id="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                />
-                <button type="submit" style={{ marginTop: '20px' }}>Login</button>
-                  <div style={{ marginTop: '20px' }}>
-                  <p>Don't have an account? <a href="/register">Register here</a></p>
-                  </div>
-            
-            </form>
-          
+  return (
+    <div className="auth-container">
+      <div className="auth-card">
+        <div className="auth-header">
+          <h1>Wedding Planner</h1>
+          <h2>Connexion</h2>
+          <p>Accédez à votre espace de planification de mariage</p>
         </div>
-    );
+
+        <form onSubmit={handleSubmit(onSubmit)} className="auth-form">
+          <div className="form-group">
+            <label htmlFor="email">Adresse email *</label>
+            <input
+              type="email"
+              id="email"
+              {...register('email', {
+                required: 'L\'email est obligatoire',
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: 'Adresse email invalide'
+                }
+              })}
+              className={errors.email ? 'error' : ''}
+              placeholder="votre@email.com"
+              autoComplete="email"
+            />
+            {errors.email && (
+              <span className="error-message">{errors.email.message}</span>
+            )}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="password">Mot de passe *</label>
+            <input
+              type="password"
+              id="password"
+              {...register('password', {
+                required: 'Le mot de passe est obligatoire',
+                minLength: {
+                  value: 6,
+                  message: 'Le mot de passe doit contenir au moins 6 caractères'
+                }
+              })}
+              className={errors.password ? 'error' : ''}
+              placeholder="Votre mot de passe"
+              autoComplete="current-password"
+            />
+            {errors.password && (
+              <span className="error-message">{errors.password.message}</span>
+            )}
+          </div>
+
+          <button 
+            type="submit" 
+            className="btn-primary auth-submit"
+            disabled={loading}
+          >
+            {loading ? (
+              <>
+                <span className="loading-spinner"></span>
+                Connexion en cours...
+              </>
+            ) : (
+              'Se connecter'
+            )}
+          </button>
+        </form>
+
+        <div className="auth-footer">
+          <p>
+            Vous n'avez pas encore de compte ?{' '}
+            <button 
+              type="button"
+              onClick={() => navigate('/register')} 
+              className="link-button"
+              disabled={loading}
+            >
+              Créer un compte
+            </button>
+          </p>
+        </div>
+
+        <div className="demo-section">
+          <h3>Compte de démonstration</h3>
+          <p>Vous pouvez utiliser ces identifiants pour tester l'application :</p>
+          <div className="demo-credentials">
+            <p><strong>Email:</strong> demo@weddingplanner.com</p>
+            <p><strong>Mot de passe:</strong> Demo123!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default LoginPage;
