@@ -10,7 +10,7 @@ interface WeddingFormData {
 }
 
 interface WeddingFormProps {
-  onWeddingCreated?: (wedding: any) => void;
+  onWeddingCreated?: (wedding: WeddingFormData) => void;
   initialData?: WeddingFormData;
   isEditing?: boolean;
   weddingId?: string;
@@ -163,11 +163,7 @@ const WeddingForm: React.FC<WeddingFormProps> = ({
         <div className="form-actions">
           <button 
             type="submit" 
-<<<<<<< HEAD
-            className="btn-primary"
-=======
             className="btn btn-primary"
->>>>>>> e96b766 (improved basic component & navigation)
             disabled={loading}
           >
             {loading ? (
@@ -183,11 +179,7 @@ const WeddingForm: React.FC<WeddingFormProps> = ({
           {!isEditing && (
             <button 
               type="button" 
-<<<<<<< HEAD
-              className="btn-secondary"
-=======
               className="btn btn-secondary"
->>>>>>> e96b766 (improved basic component & navigation)
               onClick={() => reset()}
               disabled={loading}
             >

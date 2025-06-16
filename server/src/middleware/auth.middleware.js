@@ -35,4 +35,4 @@ export const generateTokens = (userId) => {
   );
 
   return { accessToken, refreshToken };
-}; 
+};

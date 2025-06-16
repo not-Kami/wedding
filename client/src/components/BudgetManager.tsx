@@ -169,11 +169,9 @@ const BudgetManager: React.FC<BudgetManagerProps> = ({ weddingId }) => {
       <div className="budget-header">
         <h2>Gestion du Budget</h2>
         <button 
-<<<<<<< HEAD
-          className="btn-primary"
-=======
+
           className="btn btn-primary"
->>>>>>> e96b766 (improved basic component & navigation)
+
           onClick={() => setShowForm(!showForm)}
         >
           {showForm ? 'Annuler' : 'Ajouter un poste'}
@@ -276,11 +274,7 @@ const BudgetManager: React.FC<BudgetManagerProps> = ({ weddingId }) => {
             />
           </div>
 
-<<<<<<< HEAD
-          <button type="submit" className="btn-primary">
-=======
           <button type="submit" className="btn btn-primary">
->>>>>>> e96b766 (improved basic component & navigation)
             Ajouter le poste budgétaire
           </button>
         </form>
@@ -336,11 +330,7 @@ const BudgetManager: React.FC<BudgetManagerProps> = ({ weddingId }) => {
                 
                 <button
                   onClick={() => deleteBudget(budget._id)}
-<<<<<<< HEAD
-                  className="btn-delete"
-=======
                   className="btn btn-delete"
->>>>>>> e96b766 (improved basic component & navigation)
                   title="Supprimer ce poste"
                 >
                   🗑️

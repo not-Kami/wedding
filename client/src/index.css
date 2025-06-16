@@ -12,10 +12,7 @@
   --border-radius: 8px;
   --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-<<<<<<< HEAD
-=======
   --transition: all 0.3s ease;
->>>>>>> e96b766 (improved basic component & navigation)
 }
 
 * {
@@ -35,6 +32,17 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.container > main {
+  flex: 1 0 auto;
+}
+
+footer {
+  flex-shrink: 0;
 }
 
 /* Auth Pages */
@@ -45,8 +53,6 @@ body {
   justify-content: center;
   background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
   padding: 20px;
-<<<<<<< HEAD
-=======
   animation: gradientBG 15s ease infinite;
   background-size: 400% 400%;
 }
@@ -55,18 +61,12 @@ body {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
->>>>>>> e96b766 (improved basic component & navigation)
 }
 
 .auth-card {
   background: white;
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-lg);
-<<<<<<< HEAD
-  padding: 2rem;
-  width: 100%;
-  max-width: 500px;
-=======
   padding: 2.5rem;
   width: 100%;
   max-width: 500px;
@@ -89,45 +89,31 @@ body {
 .auth-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
->>>>>>> e96b766 (improved basic component & navigation)
 }
 
 .auth-header {
   text-align: center;
-<<<<<<< HEAD
-  margin-bottom: 2rem;
-=======
   margin-bottom: 2.5rem;
->>>>>>> e96b766 (improved basic component & navigation)
 }
 
 .auth-header h1 {
   color: var(--primary-dark);
   font-size: 2.5rem;
   margin-bottom: 0.5rem;
-<<<<<<< HEAD
-=======
   font-weight: 700;
   letter-spacing: -0.5px;
->>>>>>> e96b766 (improved basic component & navigation)
 }
 
 .auth-header h2 {
   color: var(--text-color);
   font-size: 1.5rem;
   margin-bottom: 0.5rem;
-<<<<<<< HEAD
-=======
   font-weight: 600;
->>>>>>> e96b766 (improved basic component & navigation)
 }
 
 .auth-header p {
   color: var(--dark-gray);
-<<<<<<< HEAD
-=======
   font-size: 1.1rem;
->>>>>>> e96b766 (improved basic component & navigation)
 }
 
 .auth-form {
@@ -137,24 +123,6 @@ body {
 }
 
 .form-group {
-<<<<<<< HEAD
-  display: flex;
-  flex-direction: column;
-}
-
-.form-group label {
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  color: var(--text-color);
-}
-
-.field-hint {
-  font-size: 0.875rem;
-  color: var(--dark-gray);
-  font-weight: normal;
-  display: block;
-  margin-top: 0.25rem;
-=======
   position: relative;
   margin-bottom: 1.5rem;
 }
@@ -164,19 +132,11 @@ body {
   margin-bottom: 0.5rem;
   font-weight: 500;
   color: var(--text-color);
->>>>>>> e96b766 (improved basic component & navigation)
 }
 
 .form-group input,
 .form-group select,
 .form-group textarea {
-<<<<<<< HEAD
-  padding: 0.75rem;
-  border: 2px solid var(--gray-color);
-  border-radius: var(--border-radius);
-  font-size: 1rem;
-  transition: border-color 0.2s ease;
-=======
   width: 100%;
   padding: 0.875rem 1rem;
   border: 2px solid var(--gray-color);
@@ -184,7 +144,6 @@ body {
   font-size: 1rem;
   transition: var(--transition);
   background-color: white;
->>>>>>> e96b766 (improved basic component & navigation)
 }
 
 .form-group input:focus,
@@ -192,10 +151,7 @@ body {
 .form-group textarea:focus {
   outline: none;
   border-color: var(--primary-color);
-<<<<<<< HEAD
-=======
   box-shadow: 0 0 0 3px rgba(244, 114, 182, 0.1);
->>>>>>> e96b766 (improved basic component & navigation)
 }
 
 .form-group input.error,
@@ -205,33 +161,6 @@ body {
 }
 
 .error-message {
-<<<<<<< HEAD
-  color: var(--error-color);
-  font-size: 0.875rem;
-  margin-top: 0.25rem;
-}
-
-.password-requirements {
-  margin-top: 0.5rem;
-}
-
-.password-requirements ul {
-  margin-left: 1rem;
-  color: var(--dark-gray);
-}
-
-.btn-primary,
-.btn-secondary,
-.btn-edit,
-.btn-delete {
-  padding: 0.75rem 1.5rem;
-  border: none;
-  border-radius: var(--border-radius);
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-=======
   position: absolute;
   bottom: -1.25rem;
   left: 0;
@@ -241,67 +170,10 @@ body {
 
 /* Harmonized Button Styles */
 .btn {
->>>>>>> e96b766 (improved basic component & navigation)
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-<<<<<<< HEAD
-}
-
-.btn-primary {
-  background-color: var(--primary-color);
-  color: white;
-}
-
-.btn-primary:hover:not(:disabled) {
-  background-color: var(--primary-dark);
-  transform: translateY(-1px);
-}
-
-.btn-secondary {
-  background-color: var(--gray-color);
-  color: var(--text-color);
-}
-
-.btn-secondary:hover:not(:disabled) {
-  background-color: var(--dark-gray);
-  color: white;
-}
-
-.btn-edit {
-  background-color: var(--secondary-color);
-  color: white;
-  padding: 0.5rem 1rem;
-  font-size: 0.875rem;
-}
-
-.btn-edit:hover {
-  background-color: #4f46e5;
-}
-
-.btn-delete,
-.btn-delete-small {
-  background-color: var(--error-color);
-  color: white;
-  padding: 0.5rem;
-  font-size: 0.875rem;
-}
-
-.btn-delete-small {
-  padding: 0.25rem 0.5rem;
-  font-size: 0.75rem;
-}
-
-.btn-delete:hover,
-.btn-delete-small:hover {
-  background-color: #dc2626;
-}
-
-.btn-primary:disabled,
-.btn-secondary:disabled {
-  opacity: 0.6;
-=======
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
   font-weight: 600;
@@ -350,39 +222,10 @@ body {
 
 .btn:disabled {
   opacity: 0.7;
->>>>>>> e96b766 (improved basic component & navigation)
   cursor: not-allowed;
   transform: none;
 }
 
-<<<<<<< HEAD
-.auth-submit {
-  margin-top: 1rem;
-  padding: 1rem;
-  font-size: 1.1rem;
-}
-
-.loading-spinner {
-  width: 16px;
-  height: 16px;
-  border: 2px solid transparent;
-  border-top: 2px solid currentColor;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.auth-footer {
-  text-align: center;
-  margin-top: 2rem;
-  padding-top: 2rem;
-  border-top: 1px solid var(--gray-color);
-=======
 .btn-large {
   padding: 1rem 2rem;
   font-size: 1.1rem;
@@ -413,63 +256,12 @@ body {
   margin-top: 2rem;
   text-align: center;
   color: var(--dark-gray);
->>>>>>> e96b766 (improved basic component & navigation)
 }
 
 .link-button {
   background: none;
   border: none;
   color: var(--primary-color);
-<<<<<<< HEAD
-  cursor: pointer;
-  font-weight: 600;
-  text-decoration: underline;
-}
-
-.link-button:hover {
-  color: var(--primary-dark);
-}
-
-.demo-section {
-  margin-top: 2rem;
-  padding: 1rem;
-  background-color: var(--light-color);
-  border-radius: var(--border-radius);
-  text-align: center;
-}
-
-.demo-credentials {
-  margin-top: 0.5rem;
-  font-family: monospace;
-  background: white;
-  padding: 1rem;
-  border-radius: var(--border-radius);
-}
-
-.auth-features {
-  margin-top: 2rem;
-  text-align: center;
-}
-
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-  margin-top: 1rem;
-}
-
-.feature-item {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem;
-  background: var(--light-color);
-  border-radius: var(--border-radius);
-}
-
-.feature-icon {
-  font-size: 1.5rem;
-=======
   font-weight: 600;
   cursor: pointer;
   padding: 0;
@@ -553,7 +345,6 @@ body {
 
 .Toastify__toast--warning {
   background-color: var(--warning-color);
->>>>>>> e96b766 (improved basic component & navigation)
 }
 
 /* Dashboard */
@@ -714,14 +505,6 @@ body {
   margin-bottom: 2rem;
 }
 
-<<<<<<< HEAD
-.btn-large {
-  padding: 1rem 2rem;
-  font-size: 1.25rem;
-}
-
-=======
->>>>>>> e96b766 (improved basic component & navigation)
 .features-overview {
   margin-top: 4rem;
 }
@@ -797,11 +580,7 @@ body {
 .form-actions {
   display: flex;
   gap: 1rem;
-<<<<<<< HEAD
-  margin-top: 1rem;
-=======
   margin-top: 2rem;
->>>>>>> e96b766 (improved basic component & navigation)
 }
 
 .wedding-info {
@@ -1425,8 +1204,6 @@ body {
   .dashboard-content {
     flex-direction: column;
   }
-<<<<<<< HEAD
-=======
 }
 
 /* Navigation */
@@ -1611,5 +1388,9 @@ body {
   max-height: 90vh;
   overflow-y: auto;
   position: relative;
->>>>>>> e96b766 (improved basic component & navigation)
+}
+
+html, body, #root {
+  height: 100%;
+  min-height: 100%;
 }

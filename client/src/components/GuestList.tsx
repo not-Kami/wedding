@@ -115,11 +115,7 @@ const GuestList: React.FC<GuestListProps> = ({ weddingId }) => {
       <div className="guest-list-header">
         <h2>Liste des Invités ({guests.length})</h2>
         <button 
-<<<<<<< HEAD
-          className="btn-primary"
-=======
           className="btn btn-primary"
->>>>>>> e96b766 (improved basic component & navigation)
           onClick={() => setShowForm(!showForm)}
         >
           {showForm ? 'Annuler' : 'Ajouter un invité'}
@@ -160,11 +156,7 @@ const GuestList: React.FC<GuestListProps> = ({ weddingId }) => {
             </label>
           </div>
 
-<<<<<<< HEAD
-          <button type="submit" className="btn-primary">
-=======
           <button type="submit" className="btn btn-primary">
->>>>>>> e96b766 (improved basic component & navigation)
             Ajouter l'invité
           </button>
         </form>
@@ -200,11 +192,7 @@ const GuestList: React.FC<GuestListProps> = ({ weddingId }) => {
                 
                 <button
                   onClick={() => deleteGuest(guest._id)}
-<<<<<<< HEAD
-                  className="btn-delete"
-=======
                   className="btn btn-danger btn-icon"
->>>>>>> e96b766 (improved basic component & navigation)
                   title="Supprimer l'invité"
                 >
                   🗑️

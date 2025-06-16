@@ -1,9 +1,6 @@
-<<<<<<< HEAD
 import { useState, useEffect } from 'react'
-=======
-import React, { useState, useEffect } from 'react'
 import Navigation from '../components/Navigation'
->>>>>>> e96b766 (improved basic component & navigation)
+import axios from 'axios'
 
 interface Wedding {
   _id: string;
@@ -13,37 +10,34 @@ interface Wedding {
   vendors: string[];
 }
 
-<<<<<<< HEAD
-=======
 interface Guest {
   _id: string;
   name: string;
-  RSVP: boolean;
-  plusOne: boolean;
-  status: 'pending' | 'confirmed' | 'cancelled';
+  status: string;
 }
 
 interface Vendor {
   _id: string;
   name: string;
   type: string;
-  contact: string;
 }
 
->>>>>>> e96b766 (improved basic component & navigation)
+interface Budget {
+  total: number;
+  spent: number;
+  remaining: number;
+}
+
 function AllWeddings() {
   const [weddings, setWeddings] = useState<Wedding[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-<<<<<<< HEAD
-=======
   const [selectedWedding, setSelectedWedding] = useState<Wedding | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [guests, setGuests] = useState<Guest[]>([]);
   const [vendors, setVendors] = useState<Vendor[]>([]);
-  const [loadingDetails, setLoadingDetails] = useState(false);
-  const [detailsError, setDetailsError] = useState<string | null>(null);
->>>>>>> e96b766 (improved basic component & navigation)
+  const [budget, setBudget] = useState<Budget | null>(null);
+  const [detailsLoading, setDetailsLoading] = useState(false);
   
   useEffect(() => {
     const fetchWeddings = async () => {
@@ -68,76 +62,34 @@ function AllWeddings() {
     fetchWeddings()
   }, [])
 
-<<<<<<< HEAD
-=======
-  // Fetch guests and vendors when a wedding is selected
   useEffect(() => {
     if (showModal && selectedWedding) {
-      setLoadingDetails(true);
-      setDetailsError(null);
+      setDetailsLoading(true);
+      const token = localStorage.getItem('accessToken');
+      const headers = token ? { Authorization: `Bearer ${token}` } : {};
       Promise.all([
-        fetch(`http://localhost:3000/api/guests?wedding=${selectedWedding._id}`)
-          .then(res => res.ok ? res.json() : Promise.reject('Erreur invités')),
-        fetch(`http://localhost:3000/api/vendors?wedding=${selectedWedding._id}`)
-          .then(res => res.ok ? res.json() : Promise.reject('Erreur prestataires'))
+        axios.get(`http://localhost:3000/api/guests?wedding=${selectedWedding._id}`, { headers }),
+        axios.get(`http://localhost:3000/api/vendors?wedding=${selectedWedding._id}`, { headers }),
+        axios.get(`http://localhost:3000/api/budget?wedding=${selectedWedding._id}`, { headers })
       ])
-        .then(([guestsData, vendorsData]) => {
-          setGuests(guestsData);
-          setVendors(vendorsData);
+        .then(([guestsRes, vendorsRes, budgetRes]) => {
+          setGuests(guestsRes.data);
+          setVendors(vendorsRes.data);
+          setBudget(budgetRes.data);
         })
         .catch(() => {
-          setDetailsError('Erreur lors du chargement des invités ou des prestataires');
+          setGuests([]);
+          setVendors([]);
+          setBudget(null);
         })
-        .finally(() => setLoadingDetails(false));
-    } else {
-      setGuests([]);
-      setVendors([]);
-      setLoadingDetails(false);
-      setDetailsError(null);
+        .finally(() => setDetailsLoading(false));
     }
   }, [showModal, selectedWedding]);
 
->>>>>>> e96b766 (improved basic component & navigation)
   if (loading) return <div className="loading">Chargement...</div>
   if (error) return <div className="error">{error}</div>
 
   return (
-<<<<<<< HEAD
-    <div className="container">
-      <header>
-        <h1>Gestionnaire de Mariages</h1>
-      </header>
-      
-      <main>
-        <section className="weddings-list">
-          <h2>Liste des Mariages</h2>
-          {weddings.length === 0 ? (
-            <p className="no-data">Aucun mariage trouvé.</p>
-          ) : (
-            <div className="weddings-grid">
-              {weddings.map((wedding) => (
-                <div key={wedding._id} className="wedding-card">
-                  <h3>{wedding.name}</h3>
-                  <div className="wedding-details">
-                    <p><strong>Date:</strong> {new Date(wedding.date).toLocaleDateString('fr-FR')}</p>
-                    <p><strong>Lieu:</strong> {wedding.place}</p>
-                    <p><strong>Nombre de prestataires:</strong> {wedding.vendors.length}</p>
-                  </div>
-                  <div className="card-actions">
-                    <button className="btn-details">Voir détails</button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </section>
-      </main>
-      
-      <footer>
-        <p>&copy; 2025 - Application de Gestion de Mariage</p>
-      </footer>
-    </div>
-=======
     <>
       <Navigation />
       <div className="container" style={{ marginTop: '5rem' }}>
@@ -180,29 +132,36 @@ function AllWeddings() {
               <p><strong>Date:</strong> {new Date(selectedWedding.date).toLocaleDateString('fr-FR')}</p>
               <p><strong>Lieu:</strong> {selectedWedding.place}</p>
               <p><strong>Nombre de prestataires:</strong> {selectedWedding.vendors.length}</p>
-              <hr style={{ margin: '1.5rem 0' }} />
-              {loadingDetails ? (
-                <div>Chargement des invités et prestataires...</div>
-              ) : detailsError ? (
-                <div className="error">{detailsError}</div>
+              {detailsLoading ? (
+                <div className="loading">Chargement des détails...</div>
               ) : (
                 <>
-                  <h3>Invités</h3>
-                  {guests.length === 0 ? <p>Aucun invité.</p> : (
-                    <ul>
-                      {guests.map(g => (
-                        <li key={g._id}>{g.name} {g.RSVP && <span style={{ color: '#10b981' }}>(RSVP)</span>} {g.plusOne && <span style={{ color: '#6366f1' }}>(+1)</span>} <span style={{ color: g.status === 'confirmed' ? '#10b981' : g.status === 'cancelled' ? '#ef4444' : '#f59e0b' }}>({g.status})</span></li>
-                      ))}
-                    </ul>
-                  )}
-                  <h3>Prestataires</h3>
-                  {vendors.length === 0 ? <p>Aucun prestataire.</p> : (
-                    <ul>
-                      {vendors.map(v => (
-                        <li key={v._id}><strong>{v.name}</strong> ({v.type}) - {v.contact}</li>
-                      ))}
-                    </ul>
-                  )}
+                  <div style={{ marginTop: '2rem' }}>
+                    <h3>Invités ({guests.length})</h3>
+                    {guests.length === 0 ? <p>Aucun invité.</p> : (
+                      <ul>
+                        {guests.map(g => <li key={g._id}>{g.name} ({g.status})</li>)}
+                      </ul>
+                    )}
+                  </div>
+                  <div style={{ marginTop: '2rem' }}>
+                    <h3>Prestataires ({vendors.length})</h3>
+                    {vendors.length === 0 ? <p>Aucun prestataire.</p> : (
+                      <ul>
+                        {vendors.map(v => <li key={v._id}>{v.name} ({v.type})</li>)}
+                      </ul>
+                    )}
+                  </div>
+                  <div style={{ marginTop: '2rem' }}>
+                    <h3>Budget</h3>
+                    {budget ? (
+                      <ul>
+                        <li><strong>Total:</strong> {budget.total} €</li>
+                        <li><strong>Dépenses:</strong> {budget.spent} €</li>
+                        <li><strong>Restant:</strong> {budget.remaining} €</li>
+                      </ul>
+                    ) : <p>Aucun budget renseigné.</p>}
+                  </div>
                 </>
               )}
             </div>
@@ -210,7 +169,6 @@ function AllWeddings() {
         )}
       </div>
     </>
->>>>>>> e96b766 (improved basic component & navigation)
   )
 }
 

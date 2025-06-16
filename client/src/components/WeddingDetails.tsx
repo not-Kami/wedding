@@ -10,6 +10,18 @@ interface Wedding {
   vendors: string[];
 }
 
+interface Guest {
+  _id: string;
+  name: string;
+  status: string;
+}
+
+interface Vendor {
+  _id: string;
+  name: string;
+  type: string;
+}
+
 interface WeddingDetailsProps {
   weddingId?: string;
   onWeddingUpdate?: (wedding: Wedding) => void;
@@ -24,29 +36,27 @@ const WeddingDetails: React.FC<WeddingDetailsProps> = ({ weddingId, onWeddingUpd
     place: ''
   });
   const [loading, setLoading] = useState(false);
+  const [vendors, setVendors] = useState<Vendor[]>([]);
+  const [guests, setGuests] = useState<Guest[]>([]);
 
   useEffect(() => {
     if (weddingId) {
-      fetchWedding();
+      axios.get(`http://localhost:3000/api/weddings/${weddingId}`)
+        .then(res => setWedding(res.data))
+        .catch(() => setWedding(null));
     }
   }, [weddingId]);
 
-  const fetchWedding = async () => {
-    try {
-      setLoading(true);
-      const response = await axios.get(`http://localhost:3000/api/weddings/${weddingId}`);
-      setWedding(response.data);
-      setFormData({
-        name: response.data.name,
-        date: response.data.date.split('T')[0],
-        place: response.data.place
-      });
-    } catch (error) {
-      toast.error('Erreur lors du chargement des détails du mariage');
-    } finally {
-      setLoading(false);
+  useEffect(() => {
+    if (weddingId) {
+      axios.get(`http://localhost:3000/api/vendors?wedding=${weddingId}`)
+        .then(res => setVendors(res.data))
+        .catch(() => setVendors([]));
+      axios.get(`http://localhost:3000/api/guests?wedding=${weddingId}`)
+        .then(res => setGuests(res.data))
+        .catch(() => setGuests([]));
     }
-  };
+  }, [weddingId]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -96,11 +106,7 @@ const WeddingDetails: React.FC<WeddingDetailsProps> = ({ weddingId, onWeddingUpd
         <h2>Détails du Mariage</h2>
         {wedding && !isEditing && (
           <button 
-<<<<<<< HEAD
-            className="btn-edit"
-=======
             className="btn btn-primary"
->>>>>>> e96b766 (improved basic component & navigation)
             onClick={() => setIsEditing(true)}
           >
             Modifier
@@ -149,21 +155,13 @@ const WeddingDetails: React.FC<WeddingDetailsProps> = ({ weddingId, onWeddingUpd
           </div>
 
           <div className="form-actions">
-<<<<<<< HEAD
-            <button type="submit" className="btn-primary" disabled={loading}>
-=======
             <button type="submit" className="btn btn-primary" disabled={loading}>
->>>>>>> e96b766 (improved basic component & navigation)
               {loading ? 'Sauvegarde...' : (weddingId ? 'Mettre à jour' : 'Créer')}
             </button>
             {wedding && (
               <button 
                 type="button" 
-<<<<<<< HEAD
-                className="btn-secondary"
-=======
                 className="btn btn-secondary"
->>>>>>> e96b766 (improved basic component & navigation)
                 onClick={() => {
                   setIsEditing(false);
                   setFormData({
@@ -190,7 +188,10 @@ const WeddingDetails: React.FC<WeddingDetailsProps> = ({ weddingId, onWeddingUpd
             <strong>Lieu:</strong> {wedding.place}
           </div>
           <div className="info-item">
-            <strong>Prestataires:</strong> {wedding.vendors.length}
+            <strong>Prestataires:</strong> {vendors.length}
+          </div>
+          <div className="info-item">
+            <strong>Invités:</strong> {guests.length}
           </div>
         </div>
       )}
