@@ -1,17 +1,8 @@
 import React from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { authService } from '../services/auth.service';
-import toast from 'react-hot-toast';
+import { useLocation } from 'react-router-dom';
 
 const Navigation: React.FC = () => {
-  const navigate = useNavigate();
   const location = useLocation();
-
-  const handleLogout = () => {
-    authService.logout();
-    toast.success('Déconnexion réussie');
-    navigate('/');
-  };
 
   const isActive = (path: string) => {
     return location.pathname === path;
@@ -21,32 +12,24 @@ const Navigation: React.FC = () => {
     <nav className="navbar">
       <div className="nav-content">
         <a href="/dashboard" className="nav-brand">
-          Wedding Planner
+          Wedding Planner - Todo Test
         </a>
         
         <div className="nav-buttons">
           <button
-            className={`nav-button ${isActive('/dashboard') ? 'active' : ''}`}
-            onClick={() => navigate('/dashboard')}
+            className={`nav-button ${isActive('/dashboard') || isActive('/') ? 'active' : ''}`}
+            onClick={() => window.location.href = '/dashboard'}
           >
             <span className="nav-icon">🏠</span>
-            <span className="nav-label">Tableau de bord</span>
+            <span className="nav-label">Dashboard</span>
           </button>
           
           <button
             className={`nav-button ${isActive('/weddings') ? 'active' : ''}`}
-            onClick={() => navigate('/weddings')}
+            onClick={() => window.location.href = '/weddings'}
           >
             <span className="nav-icon">💒</span>
-            <span className="nav-label">Mes mariages</span>
-          </button>
-          
-          <button
-            className="nav-button logout"
-            onClick={handleLogout}
-          >
-            <span className="nav-icon">🚪</span>
-            <span className="nav-label">Déconnexion</span>
+            <span className="nav-label">Tous les mariages</span>
           </button>
         </div>
       </div>
@@ -54,4 +37,4 @@ const Navigation: React.FC = () => {
   );
 };
 
-export default Navigation; 
+export default Navigation;

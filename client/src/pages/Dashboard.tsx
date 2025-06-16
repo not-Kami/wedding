@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import Navigation from '../components/Navigation';
@@ -19,22 +18,15 @@ interface Wedding {
 }
 
 const Dashboard: React.FC = () => {
-  const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState('overview');
+  const [activeTab, setActiveTab] = useState('todos'); // Start with todos tab
   const [weddings, setWeddings] = useState<Wedding[]>([]);
   const [selectedWedding, setSelectedWedding] = useState<Wedding | null>(null);
   const [loading, setLoading] = useState(true);
   const [showCreateForm, setShowCreateForm] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      navigate('/');
-      return;
-    }
-    
     fetchWeddings();
-  }, [navigate]);
+  }, []);
 
   const fetchWeddings = async () => {
     try {
@@ -57,7 +49,7 @@ const Dashboard: React.FC = () => {
     setWeddings([...weddings, newWedding]);
     setSelectedWedding(newWedding);
     setShowCreateForm(false);
-    setActiveTab('overview');
+    setActiveTab('todos'); // Switch to todos after creating wedding
     toast.success('Mariage créé avec succès !');
   };
 
@@ -85,8 +77,8 @@ const Dashboard: React.FC = () => {
   };
 
   const tabs = [
-    { id: 'overview', label: 'Aperçu', icon: '📋' },
     { id: 'todos', label: 'Tâches', icon: '✅' },
+    { id: 'overview', label: 'Aperçu', icon: '📋' },
     { id: 'guests', label: 'Invités', icon: '👥' },
     { id: 'vendors', label: 'Prestataires', icon: '🎉' },
     { id: 'budget', label: 'Budget', icon: '💰' }
@@ -162,14 +154,14 @@ const Dashboard: React.FC = () => {
             <WeddingForm onWeddingCreated={handleWeddingCreated} />
           ) : selectedWedding ? (
             <>
+              {activeTab === 'todos' && (
+                <TodoList weddingId={selectedWedding._id} />
+              )}
               {activeTab === 'overview' && (
                 <WeddingDetails 
                   weddingId={selectedWedding._id}
                   onWeddingUpdate={handleWeddingUpdate}
                 />
-              )}
-              {activeTab === 'todos' && (
-                <TodoList weddingId={selectedWedding._id} />
               )}
               {activeTab === 'guests' && (
                 <GuestList weddingId={selectedWedding._id} />
@@ -185,44 +177,13 @@ const Dashboard: React.FC = () => {
             <div className="welcome-section">
               <div className="welcome-content">
                 <h2>Bienvenue dans votre Wedding Planner ! 👰💒</h2>
-                <p>Commencez par créer votre premier mariage pour accéder à tous les outils de planification.</p>
+                <p>Commencez par créer votre premier mariage pour tester la liste de tâches.</p>
                 <button 
                   className="btn btn-primary btn-large"
                   onClick={() => setShowCreateForm(true)}
                 >
                   Créer mon premier mariage
                 </button>
-              </div>
-              
-              <div className="features-overview">
-                <h3>Fonctionnalités disponibles :</h3>
-                <div className="features-grid">
-                  <div className="feature-card">
-                    <span className="feature-icon">📋</span>
-                    <h4>Détails du mariage</h4>
-                    <p>Gérez les informations principales de votre événement</p>
-                  </div>
-                  <div className="feature-card">
-                    <span className="feature-icon">✅</span>
-                    <h4>Liste de tâches</h4>
-                    <p>Organisez et suivez toutes vos tâches de planification</p>
-                  </div>
-                  <div className="feature-card">
-                    <span className="feature-icon">👥</span>
-                    <h4>Liste d'invités</h4>
-                    <p>Suivez les RSVP et gérez vos invitations</p>
-                  </div>
-                  <div className="feature-card">
-                    <span className="feature-icon">🎉</span>
-                    <h4>Prestataires</h4>
-                    <p>Organisez vos contacts professionnels</p>
-                  </div>
-                  <div className="feature-card">
-                    <span className="feature-icon">💰</span>
-                    <h4>Budget</h4>
-                    <p>Contrôlez vos dépenses et votre budget</p>
-                  </div>
-                </div>
               </div>
             </div>
           )}
