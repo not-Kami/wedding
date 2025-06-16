@@ -1,13 +1,36 @@
-//import dotenv
-import dotenv from 'dotenv';
-dotenv.config(); 
-import app from './src/config/app.config.js';
+// Load environment variables first
+import './src/config/dotenv.config.js';
 
-const port = process.env.PORT || 3000;
+import express from 'express';
+import cors from 'cors';
+import mongoose from 'mongoose';
+import authRoutes from './src/resources/auth/auth.route.js';
+import weddingRoutes from './src/resources/wedding/wedding.route.js';
+import guestRoutes from './src/resources/guest/guest.route.js';
+import vendorRoutes from './src/resources/vendor/vendor.route.js';
+import budgetRoutes from './src/resources/budget/budget.route.js';
 
-// The app is already configured with CORS and express.json() in app.config.js
-// No need to apply middleware again here
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+// Middleware
+app.use(cors());
+app.use(express.json());
+
+// Connect to MongoDB
+mongoose.connect(process.env.MONGODB_URI)
+  .then(() => console.log('Connected to MongoDB'))
+  .catch(err => console.error('MongoDB connection error:', err));
+
+// Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/weddings', weddingRoutes);
+app.use('/api/guests', guestRoutes);
+app.use('/api/vendors', vendorRoutes);
+app.use('/api/budget', budgetRoutes);
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
+
+export default app;
