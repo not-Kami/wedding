@@ -23,7 +23,6 @@ const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://admin:gkfAqupt0mbo
 
 // Configure mongoose with better timeout settings
 mongoose.set('bufferCommands', false);
-mongoose.set('bufferMaxEntries', 0);
 
 // Connect to MongoDB with proper error handling
 const connectToDatabase = async () => {
@@ -32,7 +31,6 @@ const connectToDatabase = async () => {
       serverSelectionTimeoutMS: 30000, // 30 seconds
       socketTimeoutMS: 45000, // 45 seconds
       bufferCommands: false,
-      bufferMaxEntries: 0,
       maxPoolSize: 10,
       minPoolSize: 5,
       maxIdleTimeMS: 30000,
