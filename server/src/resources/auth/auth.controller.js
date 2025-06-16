@@ -4,6 +4,13 @@ import User from './user.model.js';
 export const register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
+    
+    // Check if JWT_SECRET is available
+    if (!process.env.JWT_SECRET) {
+      console.error('JWT_SECRET environment variable is not set');
+      return res.status(500).json({ message: 'Server configuration error' });
+    }
+    
     const user = await User.create({ name, email, password });
     
     const token = jwt.sign(
@@ -22,6 +29,12 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
+    
+    // Check if JWT_SECRET is available
+    if (!process.env.JWT_SECRET) {
+      console.error('JWT_SECRET environment variable is not set');
+      return res.status(500).json({ message: 'Server configuration error' });
+    }
     
     // Find user by email
     const user = await User.findOne({ email });
