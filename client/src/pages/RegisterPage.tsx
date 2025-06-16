@@ -1,13 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
-<<<<<<< HEAD
-import axios from 'axios';
-import toast from 'react-hot-toast';
-=======
 import toast from 'react-hot-toast';
 import { authService } from '../services/auth.service';
->>>>>>> e96b766 (improved basic component & navigation)
 
 interface RegisterFormData {
   name: string;
@@ -41,37 +36,12 @@ const RegisterPage: React.FC = () => {
 
     try {
       setLoading(true);
-<<<<<<< HEAD
-      const response = await axios.post('http://localhost:3000/api/auth/register', {
-        name: data.name,
-        email: data.email,
-        password: data.password
-      });
-
-      if (response.data.token) {
-        localStorage.setItem('token', response.data.token);
-        toast.success('Inscription réussie ! Bienvenue !');
-        navigate('/dashboard');
-      }
-    } catch (error: any) {
-      console.error('Registration error:', error);
-      if (error.response?.data?.message) {
-        toast.error(error.response.data.message);
-      } else if (error.response?.status === 400) {
-        toast.error('Données invalides. Vérifiez vos informations.');
-      } else if (error.response?.status === 409) {
-        toast.error('Cette adresse email est déjà utilisée.');
-      } else {
-        toast.error('Erreur lors de l\'inscription. Veuillez réessayer.');
-      }
-=======
       await authService.register(data.name, data.email, data.password);
       toast.success('Inscription réussie ! Bienvenue !');
       navigate('/dashboard');
     } catch (error: unknown) {
       const errorMessage = error instanceof Error ? error.message : 'Une erreur est survenue';
       toast.error(errorMessage);
->>>>>>> e96b766 (improved basic component & navigation)
     } finally {
       setLoading(false);
     }
@@ -143,13 +113,8 @@ const RegisterPage: React.FC = () => {
                   message: 'Le mot de passe doit contenir au moins 6 caractères'
                 },
                 pattern: {
-<<<<<<< HEAD
-                  value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
-                  message: 'Le mot de passe doit contenir au moins une minuscule, une majuscule et un chiffre'
-=======
                   value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
                   message: 'Le mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial'
->>>>>>> e96b766 (improved basic component & navigation)
                 }
               })}
               className={errors.password ? 'error' : ''}
@@ -158,20 +123,6 @@ const RegisterPage: React.FC = () => {
             {errors.password && (
               <span className="error-message">{errors.password.message}</span>
             )}
-<<<<<<< HEAD
-            <div className="password-requirements">
-              <small>
-                Le mot de passe doit contenir :
-                <ul>
-                  <li>Au moins 6 caractères</li>
-                  <li>Une lettre minuscule</li>
-                  <li>Une lettre majuscule</li>
-                  <li>Un chiffre</li>
-                </ul>
-              </small>
-            </div>
-=======
->>>>>>> e96b766 (improved basic component & navigation)
           </div>
 
           <div className="form-group">
@@ -194,11 +145,7 @@ const RegisterPage: React.FC = () => {
 
           <button 
             type="submit" 
-<<<<<<< HEAD
-            className="btn-primary auth-submit"
-=======
             className="btn btn-primary auth-submit"
->>>>>>> e96b766 (improved basic component & navigation)
             disabled={loading}
           >
             {loading ? (

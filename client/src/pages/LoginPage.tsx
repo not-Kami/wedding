@@ -1,13 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
-<<<<<<< HEAD
-import axios from 'axios';
-import toast from 'react-hot-toast';
-=======
 import toast from 'react-hot-toast';
 import { authService } from '../services/auth.service';
->>>>>>> e96b766 (improved basic component & navigation)
 
 interface LoginFormData {
   email: string;
@@ -27,31 +22,12 @@ const LoginPage: React.FC = () => {
   const onSubmit = async (data: LoginFormData) => {
     try {
       setLoading(true);
-<<<<<<< HEAD
-      const response = await axios.post('http://localhost:3000/api/auth/login', data);
-
-      if (response.data.token) {
-        localStorage.setItem('token', response.data.token);
-        toast.success('Connexion réussie !');
-        navigate('/dashboard');
-      }
-    } catch (error: any) {
-      console.error('Login error:', error);
-      if (error.response?.status === 401) {
-        toast.error('Email ou mot de passe incorrect');
-      } else if (error.response?.data?.message) {
-        toast.error(error.response.data.message);
-      } else {
-        toast.error('Erreur lors de la connexion. Veuillez réessayer.');
-      }
-=======
       await authService.login(data.email, data.password);
       toast.success('Connexion réussie !');
       navigate('/dashboard');
     } catch (error: unknown) {
       const errorMessage = error instanceof Error ? error.message : 'Une erreur est survenue';
       toast.error(errorMessage);
->>>>>>> e96b766 (improved basic component & navigation)
     } finally {
       setLoading(false);
     }
@@ -109,28 +85,12 @@ const LoginPage: React.FC = () => {
             )}
           </div>
 
-<<<<<<< HEAD
-          <button 
-            type="submit" 
-            className="btn-primary auth-submit"
-            disabled={loading}
-          >
-            {loading ? (
-              <>
-                <span className="loading-spinner"></span>
-                Connexion en cours...
-              </>
-            ) : (
-              'Se connecter'
-            )}
-=======
           <button
             type="submit"
             className="btn btn-primary"
             disabled={loading}
           >
             {loading ? 'Connexion...' : 'Se connecter'}
->>>>>>> e96b766 (improved basic component & navigation)
           </button>
         </form>
 

@@ -96,11 +96,7 @@ const WeddingDetails: React.FC<WeddingDetailsProps> = ({ weddingId, onWeddingUpd
         <h2>Détails du Mariage</h2>
         {wedding && !isEditing && (
           <button 
-<<<<<<< HEAD
-            className="btn-edit"
-=======
             className="btn btn-primary"
->>>>>>> e96b766 (improved basic component & navigation)
             onClick={() => setIsEditing(true)}
           >
             Modifier
@@ -149,21 +145,13 @@ const WeddingDetails: React.FC<WeddingDetailsProps> = ({ weddingId, onWeddingUpd
           </div>
 
           <div className="form-actions">
-<<<<<<< HEAD
-            <button type="submit" className="btn-primary" disabled={loading}>
-=======
             <button type="submit" className="btn btn-primary" disabled={loading}>
->>>>>>> e96b766 (improved basic component & navigation)
               {loading ? 'Sauvegarde...' : (weddingId ? 'Mettre à jour' : 'Créer')}
             </button>
             {wedding && (
               <button 
                 type="button" 
-<<<<<<< HEAD
-                className="btn-secondary"
-=======
                 className="btn btn-secondary"
->>>>>>> e96b766 (improved basic component & navigation)
                 onClick={() => {
                   setIsEditing(false);
                   setFormData({

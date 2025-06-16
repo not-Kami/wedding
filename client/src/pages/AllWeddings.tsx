@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-import { useState, useEffect } from 'react'
-=======
 import React, { useState, useEffect } from 'react'
 import Navigation from '../components/Navigation'
->>>>>>> e96b766 (improved basic component & navigation)
 
 interface Wedding {
   _id: string;
@@ -13,8 +9,6 @@ interface Wedding {
   vendors: string[];
 }
 
-<<<<<<< HEAD
-=======
 interface Guest {
   _id: string;
   name: string;
@@ -30,20 +24,16 @@ interface Vendor {
   contact: string;
 }
 
->>>>>>> e96b766 (improved basic component & navigation)
 function AllWeddings() {
   const [weddings, setWeddings] = useState<Wedding[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-<<<<<<< HEAD
-=======
   const [selectedWedding, setSelectedWedding] = useState<Wedding | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [guests, setGuests] = useState<Guest[]>([]);
   const [vendors, setVendors] = useState<Vendor[]>([]);
   const [loadingDetails, setLoadingDetails] = useState(false);
   const [detailsError, setDetailsError] = useState<string | null>(null);
->>>>>>> e96b766 (improved basic component & navigation)
   
   useEffect(() => {
     const fetchWeddings = async () => {
@@ -68,8 +58,6 @@ function AllWeddings() {
     fetchWeddings()
   }, [])
 
-<<<<<<< HEAD
-=======
   // Fetch guests and vendors when a wedding is selected
   useEffect(() => {
     if (showModal && selectedWedding) {
@@ -97,47 +85,10 @@ function AllWeddings() {
     }
   }, [showModal, selectedWedding]);
 
->>>>>>> e96b766 (improved basic component & navigation)
   if (loading) return <div className="loading">Chargement...</div>
   if (error) return <div className="error">{error}</div>
 
   return (
-<<<<<<< HEAD
-    <div className="container">
-      <header>
-        <h1>Gestionnaire de Mariages</h1>
-      </header>
-      
-      <main>
-        <section className="weddings-list">
-          <h2>Liste des Mariages</h2>
-          {weddings.length === 0 ? (
-            <p className="no-data">Aucun mariage trouvé.</p>
-          ) : (
-            <div className="weddings-grid">
-              {weddings.map((wedding) => (
-                <div key={wedding._id} className="wedding-card">
-                  <h3>{wedding.name}</h3>
-                  <div className="wedding-details">
-                    <p><strong>Date:</strong> {new Date(wedding.date).toLocaleDateString('fr-FR')}</p>
-                    <p><strong>Lieu:</strong> {wedding.place}</p>
-                    <p><strong>Nombre de prestataires:</strong> {wedding.vendors.length}</p>
-                  </div>
-                  <div className="card-actions">
-                    <button className="btn-details">Voir détails</button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </section>
-      </main>
-      
-      <footer>
-        <p>&copy; 2025 - Application de Gestion de Mariage</p>
-      </footer>
-    </div>
-=======
     <>
       <Navigation />
       <div className="container" style={{ marginTop: '5rem' }}>
@@ -210,7 +161,6 @@ function AllWeddings() {
         )}
       </div>
     </>
->>>>>>> e96b766 (improved basic component & navigation)
   )
 }
 

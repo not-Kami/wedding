@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const vendorSchema = new mongoose.Schema({
     name: {
         type: String,
-        
+        required: true
     }, 
     type: {
         type: String,
@@ -13,6 +13,10 @@ const vendorSchema = new mongoose.Schema({
     contact: {
         type: String,
         required: true
+    },
+    wedding: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Wedding'
     }
 });
 
