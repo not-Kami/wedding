@@ -68,6 +68,7 @@ class AuthService {
 
   public async login(email: string, password: string): Promise<AuthResponse> {
     const response = await axios.post(`${API_URL}/auth/login`, { email, password });
+    console.log('Login response:', response.data);
     if (response.data.accessToken) {
       this.setTokens(response.data);
     }
@@ -93,8 +94,13 @@ class AuthService {
   }
 
   private setTokens(tokens: { accessToken: string; refreshToken: string }): void {
+    console.log('Setting tokens:', tokens);
     localStorage.setItem('accessToken', tokens.accessToken);
     localStorage.setItem('refreshToken', tokens.refreshToken);
+    console.log('Tokens stored in localStorage:', {
+      accessToken: localStorage.getItem('accessToken'),
+      refreshToken: localStorage.getItem('refreshToken')
+    });
     this.startRefreshTokenTimer();
   }
 

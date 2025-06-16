@@ -1,60 +1,62 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
-import { authService } from './services/auth.service';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import Dashboard from './pages/Dashboard';
 import AllWeddings from './pages/AllWeddings';
 import Profile from './pages/Profile';
 
-interface ProtectedRouteProps {
-  children: React.ReactNode;
-}
+// Simple function to check if user is authenticated
+const isAuthenticated = () => {
+  return !!localStorage.getItem('accessToken');
+};
 
-const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
-  const token = authService.getAccessToken();
-  
-  if (!token) {
-    return <Navigate to="/" replace />;
+// Simple protected route component
+const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
+  if (!isAuthenticated()) {
+    window.location.href = '/';
+    return null;
   }
-
   return <>{children}</>;
 };
 
 function App() {
   return (
-    <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route 
-            path="/dashboard" 
-            element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="/weddings" 
-            element={
-              <ProtectedRoute>
-                <AllWeddings />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="/profile" 
-            element={
-              <ProtectedRoute>
-                <Profile />
-              </ProtectedRoute>
-            } 
-          />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </BrowserRouter>
+    <BrowserRouter>
+      <Routes>
+        {/* Public routes */}
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+
+        {/* Protected routes */}
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/weddings"
+          element={
+            <ProtectedRoute>
+              <AllWeddings />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Catch all route */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
       <Toaster 
         position="top-right"
         toastOptions={{
@@ -79,7 +81,7 @@ function App() {
           },
         }}
       />
-    </>
+    </BrowserRouter>
   );
 }
 

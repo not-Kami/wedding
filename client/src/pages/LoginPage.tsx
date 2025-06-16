@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { authService } from '../services/auth.service';
@@ -10,7 +9,6 @@ interface LoginFormData {
 }
 
 const LoginPage: React.FC = () => {
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   
   const {
@@ -19,18 +17,33 @@ const LoginPage: React.FC = () => {
     formState: { errors }
   } = useForm<LoginFormData>();
 
-  const onSubmit = async (data: LoginFormData) => {
-    try {
-      setLoading(true);
-      await authService.login(data.email, data.password);
-      toast.success('Connexion réussie !');
-      navigate('/dashboard');
-    } catch (error: unknown) {
-      const errorMessage = error instanceof Error ? error.message : 'Une erreur est survenue';
-      toast.error(errorMessage);
-    } finally {
+  const onSubmit = (data: LoginFormData) => {
+    setLoading(true);
+    
+    // Direct API call without any routing logic
+    fetch('http://localhost:3000/api/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.accessToken) {
+        localStorage.setItem('accessToken', data.accessToken);
+        localStorage.setItem('refreshToken', data.refreshToken);
+        toast.success('Connexion réussie !');
+        // Force a full page reload to the dashboard
+        window.location.href = '/dashboard';
+      } else {
+        throw new Error(data.message || 'Erreur de connexion');
+      }
+    })
+    .catch(error => {
+      toast.error(error.message || 'Une erreur est survenue');
       setLoading(false);
-    }
+    });
   };
 
   return (
@@ -99,7 +112,7 @@ const LoginPage: React.FC = () => {
             Vous n'avez pas encore de compte ?{' '}
             <button 
               type="button"
-              onClick={() => navigate('/register')} 
+              onClick={() => window.location.href = '/register'} 
               className="link-button"
               disabled={loading}
             >
