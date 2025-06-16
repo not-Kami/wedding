@@ -48,6 +48,7 @@ server/
    ```env
    PORT=3000
    MONGODB_URI=mongodb+srv://admin:gkfAqupt0mbo9u9h@wedding-planner-db-test.xhdmhed.mongodb.net/?retryWrites=true&w=majority&appName=wedding-planner-db-test
+   JWT_SECRET=your_super_secret_jwt_key_change_this_in_production
    ```
 
 4. **Démarrer le serveur:**
@@ -121,4 +122,3 @@ DELETE /api/budgets/:id
 ## 🔧 Middleware
 
 Le projet utilise un middleware de logging configuré dans `config.logger.js` pour le suivi des requêtes et des erreurs.
-
