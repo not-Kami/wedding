@@ -5,7 +5,10 @@ dotenv.config();
 import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
+<<<<<<< HEAD
 import connectToDatabase from './src/config/database.config.js';
+=======
+>>>>>>> e96b766 (improved basic component & navigation)
 import authRoutes from './src/resources/auth/auth.route.js';
 import weddingRoutes from './src/resources/wedding/wedding.route.js';
 import guestRoutes from './src/resources/guest/guest.route.js';
@@ -15,6 +18,7 @@ import budgetRoutes from './src/resources/budget/budget.route.js';
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+<<<<<<< HEAD
 console.log('🚀 Starting Wedding Planner Server...');
 console.log('📍 Port:', PORT);
 console.log('🌍 Environment:', process.env.NODE_ENV || 'development');
@@ -28,6 +32,19 @@ app.use(express.json());
 
 // Configure mongoose
 mongoose.set('bufferCommands', false);
+=======
+// Middleware
+app.use(cors());
+app.use(express.json());
+
+// MongoDB URI - use your provided URI directly if env fails
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://admin:gkfAqupt0mbo9u9h@wedding-planner-db-test.xhdmhed.mongodb.net/?retryWrites=true&w=majority&appName=wedding-planner-db-test';
+
+// Connect to MongoDB
+mongoose.connect(MONGODB_URI)
+  .then(() => console.log('Connected to MongoDB Atlas'))
+  .catch(err => console.error('MongoDB connection error:', err));
+>>>>>>> e96b766 (improved basic component & navigation)
 
 // Routes
 app.use('/api/auth', authRoutes);
@@ -36,6 +53,7 @@ app.use('/api/guests', guestRoutes);
 app.use('/api/vendors', vendorRoutes);
 app.use('/api/budgets', budgetRoutes);
 
+<<<<<<< HEAD
 // Health check endpoint
 app.get('/health', (req, res) => {
   const dbState = mongoose.connection.readyState;
@@ -106,4 +124,10 @@ process.on('SIGINT', async () => {
 // Start the server
 startServer();
 
+=======
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
+>>>>>>> e96b766 (improved basic component & navigation)
 export default app;
