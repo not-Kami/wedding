@@ -7,9 +7,20 @@ interface Vendor {
   name: string;
   type: 'photographer' | 'caterer' | 'decorator' | 'musician' | 'transportation';
   contact: string;
+<<<<<<< HEAD
 }
 
 const VendorList: React.FC = () => {
+=======
+  wedding?: string;
+}
+
+interface VendorListProps {
+  weddingId: string;
+}
+
+const VendorList: React.FC<VendorListProps> = ({ weddingId }) => {
+>>>>>>> e96b766 (improved basic component & navigation)
   const [vendors, setVendors] = useState<Vendor[]>([]);
   const [loading, setLoading] = useState(false);
   const [showForm, setShowForm] = useState(false);
@@ -30,15 +41,27 @@ const VendorList: React.FC = () => {
 
   useEffect(() => {
     fetchVendors();
+<<<<<<< HEAD
   }, []);
+=======
+  }, [weddingId]);
+>>>>>>> e96b766 (improved basic component & navigation)
 
   const fetchVendors = async () => {
     try {
       setLoading(true);
+<<<<<<< HEAD
       const response = await axios.get('http://localhost:3000/api/vendors');
       setVendors(response.data);
     } catch (error) {
       toast.error('Erreur lors du chargement des prestataires');
+=======
+      const response = await axios.get<Vendor[]>(`http://localhost:3000/api/vendors?wedding=${weddingId}`);
+      setVendors(response.data);
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Erreur lors du chargement des prestataires';
+      toast.error(errorMessage);
+>>>>>>> e96b766 (improved basic component & navigation)
     } finally {
       setLoading(false);
     }
@@ -52,22 +75,44 @@ const VendorList: React.FC = () => {
     }
 
     try {
+<<<<<<< HEAD
       let response;
       if (editingVendor) {
         response = await axios.put(`http://localhost:3000/api/vendors/${editingVendor._id}`, formData);
+=======
+      let response: { data: Vendor };
+      if (editingVendor) {
+        response = await axios.put<Vendor>(`http://localhost:3000/api/vendors/${editingVendor._id}`, {
+          ...formData,
+          wedding: weddingId
+        });
+>>>>>>> e96b766 (improved basic component & navigation)
         setVendors(vendors.map(vendor => 
           vendor._id === editingVendor._id ? response.data : vendor
         ));
         toast.success('Prestataire mis à jour avec succès');
       } else {
+<<<<<<< HEAD
         response = await axios.post('http://localhost:3000/api/vendors', formData);
+=======
+        response = await axios.post<Vendor>('http://localhost:3000/api/vendors', {
+          ...formData,
+          wedding: weddingId
+        });
+>>>>>>> e96b766 (improved basic component & navigation)
         setVendors([...vendors, response.data]);
         toast.success('Prestataire ajouté avec succès');
       }
       
       resetForm();
+<<<<<<< HEAD
     } catch (error) {
       toast.error('Erreur lors de la sauvegarde');
+=======
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Erreur lors de la sauvegarde';
+      toast.error(errorMessage);
+>>>>>>> e96b766 (improved basic component & navigation)
     }
   };
 
@@ -96,8 +141,14 @@ const VendorList: React.FC = () => {
       await axios.delete(`http://localhost:3000/api/vendors/${vendorId}`);
       setVendors(vendors.filter(vendor => vendor._id !== vendorId));
       toast.success('Prestataire supprimé');
+<<<<<<< HEAD
     } catch (error) {
       toast.error('Erreur lors de la suppression');
+=======
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Erreur lors de la suppression';
+      toast.error(errorMessage);
+>>>>>>> e96b766 (improved basic component & navigation)
     }
   };
 
@@ -121,7 +172,11 @@ const VendorList: React.FC = () => {
       <div className="vendor-list-header">
         <h2>Prestataires ({vendors.length})</h2>
         <button 
+<<<<<<< HEAD
           className="btn-primary"
+=======
+          className="btn btn-primary"
+>>>>>>> e96b766 (improved basic component & navigation)
           onClick={() => setShowForm(!showForm)}
         >
           {showForm ? 'Annuler' : 'Ajouter un prestataire'}
@@ -169,10 +224,17 @@ const VendorList: React.FC = () => {
           </div>
 
           <div className="form-actions">
+<<<<<<< HEAD
             <button type="submit" className="btn-primary">
               {editingVendor ? 'Mettre à jour' : 'Ajouter'}
             </button>
             <button type="button" className="btn-secondary" onClick={resetForm}>
+=======
+            <button type="submit" className="btn btn-primary">
+              {editingVendor ? 'Mettre à jour' : 'Ajouter'}
+            </button>
+            <button type="button" className="btn btn-secondary" onClick={resetForm}>
+>>>>>>> e96b766 (improved basic component & navigation)
               Annuler
             </button>
           </div>
@@ -200,14 +262,22 @@ const VendorList: React.FC = () => {
               <div className="vendor-actions">
                 <button
                   onClick={() => editVendor(vendor)}
+<<<<<<< HEAD
                   className="btn-edit"
+=======
+                  className="btn btn-edit"
+>>>>>>> e96b766 (improved basic component & navigation)
                   title="Modifier le prestataire"
                 >
                   ✏️
                 </button>
                 <button
                   onClick={() => deleteVendor(vendor._id)}
+<<<<<<< HEAD
                   className="btn-delete"
+=======
+                  className="btn btn-delete"
+>>>>>>> e96b766 (improved basic component & navigation)
                   title="Supprimer le prestataire"
                 >
                   🗑️

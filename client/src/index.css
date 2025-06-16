@@ -12,6 +12,10 @@
   --border-radius: 8px;
   --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+<<<<<<< HEAD
+=======
+  --transition: all 0.3s ease;
+>>>>>>> e96b766 (improved basic component & navigation)
 }
 
 * {
@@ -41,36 +45,89 @@ body {
   justify-content: center;
   background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
   padding: 20px;
+<<<<<<< HEAD
+=======
+  animation: gradientBG 15s ease infinite;
+  background-size: 400% 400%;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+>>>>>>> e96b766 (improved basic component & navigation)
 }
 
 .auth-card {
   background: white;
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-lg);
+<<<<<<< HEAD
   padding: 2rem;
   width: 100%;
   max-width: 500px;
+=======
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 500px;
+  transform: translateY(0);
+  transition: var(--transition);
+  animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.auth-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+>>>>>>> e96b766 (improved basic component & navigation)
 }
 
 .auth-header {
   text-align: center;
+<<<<<<< HEAD
   margin-bottom: 2rem;
+=======
+  margin-bottom: 2.5rem;
+>>>>>>> e96b766 (improved basic component & navigation)
 }
 
 .auth-header h1 {
   color: var(--primary-dark);
   font-size: 2.5rem;
   margin-bottom: 0.5rem;
+<<<<<<< HEAD
+=======
+  font-weight: 700;
+  letter-spacing: -0.5px;
+>>>>>>> e96b766 (improved basic component & navigation)
 }
 
 .auth-header h2 {
   color: var(--text-color);
   font-size: 1.5rem;
   margin-bottom: 0.5rem;
+<<<<<<< HEAD
+=======
+  font-weight: 600;
+>>>>>>> e96b766 (improved basic component & navigation)
 }
 
 .auth-header p {
   color: var(--dark-gray);
+<<<<<<< HEAD
+=======
+  font-size: 1.1rem;
+>>>>>>> e96b766 (improved basic component & navigation)
 }
 
 .auth-form {
@@ -80,6 +137,7 @@ body {
 }
 
 .form-group {
+<<<<<<< HEAD
   display: flex;
   flex-direction: column;
 }
@@ -96,16 +154,37 @@ body {
   font-weight: normal;
   display: block;
   margin-top: 0.25rem;
+=======
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--text-color);
+>>>>>>> e96b766 (improved basic component & navigation)
 }
 
 .form-group input,
 .form-group select,
 .form-group textarea {
+<<<<<<< HEAD
   padding: 0.75rem;
   border: 2px solid var(--gray-color);
   border-radius: var(--border-radius);
   font-size: 1rem;
   transition: border-color 0.2s ease;
+=======
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: 2px solid var(--gray-color);
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  transition: var(--transition);
+  background-color: white;
+>>>>>>> e96b766 (improved basic component & navigation)
 }
 
 .form-group input:focus,
@@ -113,6 +192,10 @@ body {
 .form-group textarea:focus {
   outline: none;
   border-color: var(--primary-color);
+<<<<<<< HEAD
+=======
+  box-shadow: 0 0 0 3px rgba(244, 114, 182, 0.1);
+>>>>>>> e96b766 (improved basic component & navigation)
 }
 
 .form-group input.error,
@@ -122,6 +205,7 @@ body {
 }
 
 .error-message {
+<<<<<<< HEAD
   color: var(--error-color);
   font-size: 0.875rem;
   margin-top: 0.25rem;
@@ -147,10 +231,22 @@ body {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
+=======
+  position: absolute;
+  bottom: -1.25rem;
+  left: 0;
+  font-size: 0.875rem;
+  color: var(--error-color);
+}
+
+/* Harmonized Button Styles */
+.btn {
+>>>>>>> e96b766 (improved basic component & navigation)
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+<<<<<<< HEAD
 }
 
 .btn-primary {
@@ -205,10 +301,61 @@ body {
 .btn-primary:disabled,
 .btn-secondary:disabled {
   opacity: 0.6;
+=======
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  font-size: 1rem;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.05);
+  outline: none;
+  background: var(--gray-color, #e5e7eb);
+  color: var(--primary-dark, #1e293b);
+}
+
+.btn:hover {
+  background: #e0e7ff;
+  color: var(--primary-color, #6366f1);
+  transform: translateY(-1px) scale(1.03);
+}
+
+.btn-primary {
+  background: var(--primary-color, #ec4899);
+  color: #fff;
+}
+.btn-primary:hover {
+  background: var(--primary-dark, #be185d);
+  color: #fff;
+}
+
+.btn-secondary {
+  background: var(--secondary-color, #6366f1);
+  color: #fff;
+}
+.btn-secondary:hover {
+  background: var(--secondary-dark, #3730a3);
+  color: #fff;
+}
+
+.btn-danger {
+  background: var(--error-color, #ef4444);
+  color: #fff;
+}
+.btn-danger:hover {
+  background: var(--error-dark, #b91c1c);
+  color: #fff;
+}
+
+.btn:disabled {
+  opacity: 0.7;
+>>>>>>> e96b766 (improved basic component & navigation)
   cursor: not-allowed;
   transform: none;
 }
 
+<<<<<<< HEAD
 .auth-submit {
   margin-top: 1rem;
   padding: 1rem;
@@ -235,12 +382,45 @@ body {
   margin-top: 2rem;
   padding-top: 2rem;
   border-top: 1px solid var(--gray-color);
+=======
+.btn-large {
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+}
+
+/* Icon-only button style */
+.btn-icon {
+  background: none;
+  border: none;
+  color: var(--error-color, #ef4444);
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+.btn-icon:hover {
+  background: var(--error-color, #ef4444);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.15);
+}
+
+.auth-footer {
+  margin-top: 2rem;
+  text-align: center;
+  color: var(--dark-gray);
+>>>>>>> e96b766 (improved basic component & navigation)
 }
 
 .link-button {
   background: none;
   border: none;
   color: var(--primary-color);
+<<<<<<< HEAD
   cursor: pointer;
   font-weight: 600;
   text-decoration: underline;
@@ -289,6 +469,91 @@ body {
 
 .feature-icon {
   font-size: 1.5rem;
+=======
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  font-size: inherit;
+  transition: var(--transition);
+}
+
+.link-button:hover:not(:disabled) {
+  color: var(--primary-dark);
+  text-decoration: underline;
+}
+
+.demo-section {
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--gray-color);
+  text-align: center;
+}
+
+.demo-section h3 {
+  color: var(--text-color);
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.demo-section p {
+  color: var(--dark-gray);
+  margin-bottom: 1rem;
+}
+
+.demo-credentials {
+  background-color: var(--light-color);
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  margin-top: 1rem;
+}
+
+.demo-credentials p {
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+}
+
+.demo-credentials strong {
+  color: var(--text-color);
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  .auth-card {
+    padding: 1.5rem;
+  }
+
+  .auth-header h1 {
+    font-size: 2rem;
+  }
+
+  .auth-header h2 {
+    font-size: 1.25rem;
+  }
+
+  .btn-primary {
+    padding: 0.875rem 1.25rem;
+    font-size: 1rem;
+  }
+}
+
+/* Toast Notifications */
+.Toastify__toast {
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  font-weight: 500;
+}
+
+.Toastify__toast--success {
+  background-color: var(--success-color);
+}
+
+.Toastify__toast--error {
+  background-color: var(--error-color);
+}
+
+.Toastify__toast--warning {
+  background-color: var(--warning-color);
+>>>>>>> e96b766 (improved basic component & navigation)
 }
 
 /* Dashboard */
@@ -449,11 +714,14 @@ body {
   margin-bottom: 2rem;
 }
 
+<<<<<<< HEAD
 .btn-large {
   padding: 1rem 2rem;
   font-size: 1.25rem;
 }
 
+=======
+>>>>>>> e96b766 (improved basic component & navigation)
 .features-overview {
   margin-top: 4rem;
 }
@@ -529,7 +797,11 @@ body {
 .form-actions {
   display: flex;
   gap: 1rem;
+<<<<<<< HEAD
   margin-top: 1rem;
+=======
+  margin-top: 2rem;
+>>>>>>> e96b766 (improved basic component & navigation)
 }
 
 .wedding-info {
@@ -1153,4 +1425,191 @@ body {
   .dashboard-content {
     flex-direction: column;
   }
+<<<<<<< HEAD
+=======
+}
+
+/* Navigation */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  padding: 1rem 2rem;
+}
+
+.nav-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.nav-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius);
+  color: var(--text-color);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.nav-button:hover {
+  background: var(--light-color);
+  color: var(--primary-color);
+}
+
+.nav-button.active {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-button.logout {
+  color: var(--error-color);
+}
+
+.nav-button.logout:hover {
+  background: var(--error-color);
+  color: white;
+}
+
+/* Adjust main content to account for fixed navbar */
+.dashboard-content {
+  margin-top: 4rem;
+  padding: 2rem;
+  display: flex;
+  gap: 2rem;
+  min-height: calc(100vh - 4rem);
+}
+
+/* Profile Styles */
+.profile-container {
+  background: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.profile-header h1 {
+  color: var(--text-color);
+  margin: 0;
+}
+
+.profile-info {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.info-group {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.info-group label {
+  color: var(--dark-gray);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.info-group p {
+  color: var(--text-color);
+  font-size: 1.125rem;
+  margin: 0;
+}
+
+.profile-form {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.form-section {
+  background: var(--light-color);
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  margin-top: 1rem;
+}
+
+.form-section h3 {
+  color: var(--text-color);
+  margin: 0 0 1rem 0;
+  font-size: 1.125rem;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* Card actions spacing */
+.card-actions {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Weddings grid modern responsive */
+.weddings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(30, 41, 59, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+.modal-content {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 32px rgba(99, 102, 241, 0.15);
+  padding: 2.5rem 2rem 2rem 2rem;
+  min-width: 320px;
+  max-width: 95vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+>>>>>>> e96b766 (improved basic component & navigation)
 }
