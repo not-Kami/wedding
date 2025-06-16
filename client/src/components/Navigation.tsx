@@ -1,16 +1,17 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { authService } from '../services/auth.service';
+import { useAuth } from '../hooks/useAuth';
 import toast from 'react-hot-toast';
 
 const Navigation: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { logout } = useAuth();
 
   const handleLogout = () => {
-    authService.logout();
+    logout();
     toast.success('Déconnexion réussie');
-    navigate('/');
+    navigate('/', { replace: true });
   };
 
   const isActive = (path: string) => {

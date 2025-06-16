@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { useAuth } from '../hooks/useAuth';
 import Navigation from '../components/Navigation';
 import WeddingDetails from '../components/WeddingDetails';
 import GuestList from '../components/GuestList';
@@ -20,6 +21,7 @@ interface Wedding {
 
 const Dashboard: React.FC = () => {
   const navigate = useNavigate();
+  const { isAuthenticated, isLoading } = useAuth();
   const [activeTab, setActiveTab] = useState('overview');
   const [weddings, setWeddings] = useState<Wedding[]>([]);
   const [selectedWedding, setSelectedWedding] = useState<Wedding | null>(null);
@@ -27,14 +29,15 @@ const Dashboard: React.FC = () => {
   const [showCreateForm, setShowCreateForm] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      navigate('/');
+    if (!isLoading && !isAuthenticated) {
+      navigate('/', { replace: true });
       return;
     }
     
-    fetchWeddings();
-  }, [navigate]);
+    if (isAuthenticated) {
+      fetchWeddings();
+    }
+  }, [isLoading, isAuthenticated, navigate]);
 
   const fetchWeddings = async () => {
     try {

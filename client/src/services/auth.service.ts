@@ -13,12 +13,10 @@ class AuthService {
   private refreshTokenTimeout: ReturnType<typeof setTimeout> | null = null;
 
   private constructor() {
-    // Private constructor for singleton
     this.setupAxiosInterceptors();
   }
 
   private setupAxiosInterceptors(): void {
-    // Add a request interceptor
     axios.interceptors.request.use(
       (config) => {
         const token = this.getAccessToken();
@@ -32,13 +30,11 @@ class AuthService {
       }
     );
 
-    // Add a response interceptor
     axios.interceptors.response.use(
       (response) => response,
       async (error) => {
         const originalRequest = error.config;
 
-        // If the error is 401 and we haven't tried to refresh the token yet
         if (error.response?.status === 401 && !originalRequest._retry) {
           originalRequest._retry = true;
 
@@ -49,7 +45,6 @@ class AuthService {
             return axios(originalRequest);
           } catch (refreshError) {
             this.logout();
-            window.location.href = '/';
             return Promise.reject(refreshError);
           }
         }
@@ -67,20 +62,41 @@ class AuthService {
   }
 
   public async login(email: string, password: string): Promise<AuthResponse> {
-    const response = await axios.post(`${API_URL}/auth/login`, { email, password });
-    console.log('Login response:', response.data);
-    if (response.data.accessToken) {
-      this.setTokens(response.data);
+    try {
+      const response = await axios.post(`${API_URL}/auth/login`, { email, password });
+      const { accessToken, refreshToken, message } = response.data;
+      
+      if (!accessToken || !refreshToken) {
+        throw new Error('Invalid response from server: missing tokens');
+      }
+
+      this.setTokens({ accessToken, refreshToken });
+      return { accessToken, refreshToken, message: message || 'Login successful' };
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        throw new Error(error.response?.data?.message || 'Login failed');
+      }
+      throw error;
     }
-    return response.data;
   }
 
   public async register(name: string, email: string, password: string): Promise<AuthResponse> {
-    const response = await axios.post(`${API_URL}/auth/register`, { name, email, password });
-    if (response.data.accessToken) {
-      this.setTokens(response.data);
+    try {
+      const response = await axios.post(`${API_URL}/auth/register`, { name, email, password });
+      const { accessToken, refreshToken, message } = response.data;
+      
+      if (!accessToken || !refreshToken) {
+        throw new Error('Invalid response from server: missing tokens');
+      }
+
+      this.setTokens({ accessToken, refreshToken });
+      return { accessToken, refreshToken, message: message || 'Registration successful' };
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        throw new Error(error.response?.data?.message || 'Registration failed');
+      }
+      throw error;
     }
-    return response.data;
   }
 
   public logout(): void {
@@ -94,19 +110,14 @@ class AuthService {
   }
 
   private setTokens(tokens: { accessToken: string; refreshToken: string }): void {
-    console.log('Setting tokens:', tokens);
     localStorage.setItem('accessToken', tokens.accessToken);
     localStorage.setItem('refreshToken', tokens.refreshToken);
-    console.log('Tokens stored in localStorage:', {
-      accessToken: localStorage.getItem('accessToken'),
-      refreshToken: localStorage.getItem('refreshToken')
-    });
     this.startRefreshTokenTimer();
   }
 
   private startRefreshTokenTimer(): void {
     const expires = this.getTokenExpiration();
-    const timeout = expires.getTime() - Date.now() - (60 * 1000); // Refresh 1 minute before expiry
+    const timeout = expires.getTime() - Date.now() - (60 * 1000);
     this.refreshTokenTimeout = setTimeout(() => this.refreshToken(), timeout);
   }
 
@@ -121,22 +132,33 @@ class AuthService {
     const token = this.getAccessToken();
     if (!token) return new Date(0);
     
-    const payload = JSON.parse(atob(token.split('.')[1]));
-    return new Date(payload.exp * 1000);
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return new Date(payload.exp * 1000);
+    } catch (error) {
+      console.error('Error parsing token:', error);
+      return new Date(0);
+    }
   }
 
   private async refreshToken(): Promise<void> {
     const refreshToken = localStorage.getItem('refreshToken');
-    if (!refreshToken) return;
+    if (!refreshToken) {
+      throw new Error('No refresh token available');
+    }
 
     try {
       const response = await axios.post(`${API_URL}/auth/refresh-token`, { refreshToken });
-      this.setTokens(response.data);
-    } catch (error: unknown) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
-      console.error('Token refresh failed:', errorMessage);
+      const { accessToken, refreshToken: newRefreshToken } = response.data;
+      
+      if (!accessToken || !newRefreshToken) {
+        throw new Error('Invalid response from server: missing tokens');
+      }
+
+      this.setTokens({ accessToken, refreshToken: newRefreshToken });
+    } catch (error) {
       this.logout();
-      window.location.href = '/';
+      throw error;
     }
   }
 }

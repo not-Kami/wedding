@@ -1,50 +1,46 @@
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
 import toast from 'react-hot-toast';
-import { authService } from '../services/auth.service';
 
-interface LoginFormData {
-  email: string;
-  password: string;
-}
+const LoginPage = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
+  const { login, isAuthenticated, isLoading } = useAuth();
 
-const LoginPage: React.FC = () => {
-  const [loading, setLoading] = useState(false);
-  
-  const {
-    register,
-    handleSubmit,
-    formState: { errors }
-  } = useForm<LoginFormData>();
+  useEffect(() => {
+    if (isAuthenticated && !isLoading && !isSubmitting) {
+      navigate('/dashboard', { replace: true });
+    }
+  }, [isAuthenticated, isLoading, navigate, isSubmitting]);
 
-  const onSubmit = (data: LoginFormData) => {
-    setLoading(true);
-    
-    // Direct API call without any routing logic
-    fetch('http://localhost:3000/api/auth/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.accessToken) {
-        localStorage.setItem('accessToken', data.accessToken);
-        localStorage.setItem('refreshToken', data.refreshToken);
-        toast.success('Connexion réussie !');
-        // Force a full page reload to the dashboard
-        window.location.href = '/dashboard';
-      } else {
-        throw new Error(data.message || 'Erreur de connexion');
-      }
-    })
-    .catch(error => {
-      toast.error(error.message || 'Une erreur est survenue');
-      setLoading(false);
-    });
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
+    try {
+      const response = await login(email, password);
+      toast.success(response.message || 'Connexion réussie !');
+    } catch (error) {
+      console.error('Login error:', error);
+      toast.error(error instanceof Error ? error.message : 'Échec de la connexion. Veuillez vérifier vos identifiants.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
+  if (isLoading) {
+    return (
+      <div className="auth-container">
+        <div className="auth-card">
+          <div className="loading">Chargement...</div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="auth-container">
@@ -55,26 +51,20 @@ const LoginPage: React.FC = () => {
           <p>Accédez à votre espace de planification de mariage</p>
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="auth-form">
+        <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-group">
             <label htmlFor="email">Adresse email *</label>
             <input
               type="email"
               id="email"
-              {...register('email', {
-                required: 'L\'email est obligatoire',
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: 'Adresse email invalide'
-                }
-              })}
-              className={errors.email ? 'error' : ''}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="form-input"
               placeholder="votre@email.com"
               autoComplete="email"
+              required
+              disabled={isSubmitting}
             />
-            {errors.email && (
-              <span className="error-message">{errors.email.message}</span>
-            )}
           </div>
 
           <div className="form-group">
@@ -82,28 +72,22 @@ const LoginPage: React.FC = () => {
             <input
               type="password"
               id="password"
-              {...register('password', {
-                required: 'Le mot de passe est obligatoire',
-                minLength: {
-                  value: 6,
-                  message: 'Le mot de passe doit contenir au moins 6 caractères'
-                }
-              })}
-              className={errors.password ? 'error' : ''}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="form-input"
               placeholder="Votre mot de passe"
               autoComplete="current-password"
+              required
+              disabled={isSubmitting}
             />
-            {errors.password && (
-              <span className="error-message">{errors.password.message}</span>
-            )}
           </div>
 
           <button
             type="submit"
             className="btn btn-primary"
-            disabled={loading}
+            disabled={isSubmitting}
           >
-            {loading ? 'Connexion...' : 'Se connecter'}
+            {isSubmitting ? 'Connexion...' : 'Se connecter'}
           </button>
         </form>
 
@@ -112,9 +96,9 @@ const LoginPage: React.FC = () => {
             Vous n'avez pas encore de compte ?{' '}
             <button 
               type="button"
-              onClick={() => window.location.href = '/register'} 
+              onClick={() => navigate('/register')} 
               className="link-button"
-              disabled={loading}
+              disabled={isSubmitting}
             >
               Créer un compte
             </button>
