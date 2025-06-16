@@ -10,6 +10,7 @@ import weddingRoutes from './src/resources/wedding/wedding.route.js';
 import guestRoutes from './src/resources/guest/guest.route.js';
 import vendorRoutes from './src/resources/vendor/vendor.route.js';
 import budgetRoutes from './src/resources/budget/budget.route.js';
+import todoRoutes from './src/resources/todo/todo.route.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -32,6 +33,7 @@ app.use('/api/weddings', weddingRoutes);
 app.use('/api/guests', guestRoutes);
 app.use('/api/vendors', vendorRoutes);
 app.use('/api/budgets', budgetRoutes);
+app.use('/api/todos', todoRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

@@ -589,6 +589,205 @@ body {
   margin-right: 0.5rem;
 }
 
+/* Todo List */
+.todo-list-container {
+  background: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  padding: 2rem;
+}
+
+.todo-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.todo-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.summary-card {
+  background: var(--light-color);
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  text-align: center;
+}
+
+.summary-card h3 {
+  color: var(--dark-gray);
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+
+.summary-card .count {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+.summary-card .count.pending {
+  color: var(--warning-color);
+}
+
+.summary-card .count.completed {
+  color: var(--success-color);
+}
+
+.summary-card .percentage {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--secondary-color);
+}
+
+.todo-form {
+  background: var(--light-color);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  margin-bottom: 2rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.todos-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.todos-section h3 {
+  color: var(--text-color);
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+}
+
+.todos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+}
+
+.todo-card {
+  background: white;
+  border: 2px solid var(--gray-color);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  transition: all 0.2s ease;
+}
+
+.todo-card:hover {
+  border-color: var(--primary-color);
+  transform: translateY(-2px);
+}
+
+.todo-card.completed {
+  opacity: 0.7;
+  background-color: #f8fafc;
+}
+
+.todo-card.completed h4 {
+  text-decoration: line-through;
+}
+
+.todo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.todo-category {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.category-icon {
+  font-size: 1.25rem;
+}
+
+.category-label {
+  font-size: 0.875rem;
+  color: var(--dark-gray);
+  font-weight: 500;
+}
+
+.priority-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: white;
+  text-transform: uppercase;
+}
+
+.completed-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background-color: var(--success-color);
+  color: white;
+}
+
+.todo-content h4 {
+  color: var(--text-color);
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.todo-description {
+  color: var(--dark-gray);
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+.todo-due-date {
+  color: var(--warning-color);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.todo-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.btn-edit {
+  background-color: var(--secondary-color);
+  color: white;
+  padding: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.btn-edit:hover {
+  background-color: #4f46e5;
+}
+
+.btn-delete {
+  background-color: var(--error-color);
+  color: white;
+  padding: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.btn-delete:hover {
+  background-color: #dc2626;
+}
+
 /* Guest List */
 .guest-list-container {
   background: white;
@@ -757,12 +956,6 @@ body {
   margin-bottom: 2rem;
 }
 
-.form-row {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-}
-
 .vendors-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -858,20 +1051,6 @@ body {
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1.5rem;
   margin-bottom: 2rem;
-}
-
-.summary-card {
-  background: var(--light-color);
-  padding: 1.5rem;
-  border-radius: var(--border-radius);
-  text-align: center;
-}
-
-.summary-card h3 {
-  color: var(--dark-gray);
-  font-size: 0.875rem;
-  margin-bottom: 0.5rem;
-  text-transform: uppercase;
 }
 
 .amount {
@@ -1097,11 +1276,13 @@ body {
   }
   
   .guests-grid,
-  .vendors-grid {
+  .vendors-grid,
+  .todos-grid {
     grid-template-columns: 1fr;
   }
   
-  .budget-summary {
+  .budget-summary,
+  .todo-summary {
     grid-template-columns: repeat(2, 1fr);
   }
   
@@ -1161,11 +1342,13 @@ body {
   .guest-list-container,
   .vendor-list-container,
   .budget-manager-container,
-  .wedding-form-container {
+  .wedding-form-container,
+  .todo-list-container {
     padding: 1rem;
   }
   
-  .budget-summary {
+  .budget-summary,
+  .todo-summary {
     grid-template-columns: 1fr;
   }
   

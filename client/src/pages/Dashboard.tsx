@@ -7,6 +7,7 @@ import WeddingDetails from '../components/WeddingDetails';
 import GuestList from '../components/GuestList';
 import VendorList from '../components/VendorList';
 import BudgetManager from '../components/BudgetManager';
+import TodoList from '../components/TodoList';
 import WeddingForm from '../components/WeddingForm';
 
 interface Wedding {
@@ -85,6 +86,7 @@ const Dashboard: React.FC = () => {
 
   const tabs = [
     { id: 'overview', label: 'Aperçu', icon: '📋' },
+    { id: 'todos', label: 'Tâches', icon: '✅' },
     { id: 'guests', label: 'Invités', icon: '👥' },
     { id: 'vendors', label: 'Prestataires', icon: '🎉' },
     { id: 'budget', label: 'Budget', icon: '💰' }
@@ -166,6 +168,9 @@ const Dashboard: React.FC = () => {
                   onWeddingUpdate={handleWeddingUpdate}
                 />
               )}
+              {activeTab === 'todos' && (
+                <TodoList weddingId={selectedWedding._id} />
+              )}
               {activeTab === 'guests' && (
                 <GuestList weddingId={selectedWedding._id} />
               )}
@@ -193,9 +198,14 @@ const Dashboard: React.FC = () => {
                 <h3>Fonctionnalités disponibles :</h3>
                 <div className="features-grid">
                   <div className="feature-card">
-                    <span className="feature-icon">🏠</span>
+                    <span className="feature-icon">📋</span>
                     <h4>Détails du mariage</h4>
                     <p>Gérez les informations principales de votre événement</p>
+                  </div>
+                  <div className="feature-card">
+                    <span className="feature-icon">✅</span>
+                    <h4>Liste de tâches</h4>
+                    <p>Organisez et suivez toutes vos tâches de planification</p>
                   </div>
                   <div className="feature-card">
                     <span className="feature-icon">👥</span>
